@@ -1,8 +1,9 @@
 const fs = require('fs/promises');
-const path = require("path");
+const {join} = require("path");
 
-const contactsPath = path.join(__dirname, "db/contacts.json");
-
+// const contactsPath = join(__dirname, 'db', 'contacts.json');
+const contactsPath = join(__dirname, "..", "db", "contacts.json");
+// console.log(contactsPath)
 async function listContacts() {
     const data =  await fs.readFile(contactsPath);
     return JSON.parse(data);
@@ -11,7 +12,8 @@ async function listContacts() {
 async function getContactById(contactId) {
     const data = await listContacts();
     const result = data.filter(item => item.id === contactId);
-    return result || null;
+    console.log(result.length)
+    return result;
 }
 
 async function removeContact(contactId) {
@@ -25,7 +27,7 @@ async function removeContact(contactId) {
     return result;
 }
 
-async function addContact(name, email, phone) {
+async function addContact({name, email, phone}) {
     const data = await listContacts();
     const id = Date.now() + Math.random();
     const newContact = {
@@ -39,5 +41,19 @@ async function addContact(name, email, phone) {
     return newContact;
 }
 
-module.exports = {listContacts, getContactById, removeContact, addContact}
+async function updateContactById(id, query) {
+    const data = await listContacts();
+    const index = data.findIndex(item => item.id === id);
+    if (index === -1) {
+        return null;
+    }
+    data[index] = {
+        ...data[index],
+        ...query
+    };
+    await fs.writeFile(contactsPath, JSON.stringify(data, null, 2));
+    return data[index];
+}
+
+module.exports = {listContacts, getContactById, removeContact, addContact, updateContactById}
 
