@@ -1,9 +1,8 @@
 const fs = require('fs/promises');
 const {join} = require("path");
 
-// const contactsPath = join(__dirname, 'db', 'contacts.json');
 const contactsPath = join(__dirname, "..", "db", "contacts.json");
-// console.log(contactsPath)
+
 async function listContacts() {
     const data =  await fs.readFile(contactsPath);
     return JSON.parse(data);
@@ -11,8 +10,7 @@ async function listContacts() {
 
 async function getContactById(contactId) {
     const data = await listContacts();
-    const result = data.filter(item => item.id === contactId);
-    console.log(result.length)
+    const result = data.find(item => item.id === contactId);
     return result;
 }
 
