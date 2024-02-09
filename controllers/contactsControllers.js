@@ -1,4 +1,3 @@
-const {listContacts, getContactById, removeContact, addContact, updateContactById} = require('../services/contactsServices')
 const HttpError = require("../helpers/HttpError");
 const wrapper = require("../helpers/wrapper");
 const {Contact} = require('../models/contact');
@@ -13,7 +12,6 @@ const getAllContacts = async (req, res) => {
 };
 
 const getOneContact = async (req, res) => {
-    console.log(123)
     const result = await Contact.findById(req.params.id);
 
     if (!result) {
