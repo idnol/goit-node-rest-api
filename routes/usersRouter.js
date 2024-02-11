@@ -1,5 +1,5 @@
 const express = require('express');
-const {getCurrentUser, logout} = require("../controllers/users");
+const {getCurrentUser, logout} = require("../controllers/usersController");
 const authenticate = require("../helpers/authenticate");
 
 

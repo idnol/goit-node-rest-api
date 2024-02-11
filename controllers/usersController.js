@@ -51,7 +51,28 @@ const login = async (req, res) => {
     res.status(201).json(token);
 }
 
+
+
+const getCurrentUser = async (req, res) => {
+    const {id: id} = req.user;
+    const result = await User.findById(id);
+    if (!result) {
+        throw HttpError(404);
+    }
+    res.status(201).json(result);
+}
+const logout = async (req, res) => {
+    const {id: id} = req.user;
+    const result = await User.findByIdAndUpdate(id, {token: ''});
+    if (!result) {
+        throw HttpError(404);
+    }
+    res.status(201).json(result);
+}
+
 module.exports = {
     register: wrapper(register),
     login: wrapper(login),
+    getCurrentUser: wrapper(getCurrentUser),
+    logout: wrapper(logout)
 };

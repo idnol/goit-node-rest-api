@@ -7,7 +7,7 @@ const {
   deleteContact,
   updateContact,
   updateStatusContact,
-} = require("../controllers/contactsControllers");
+} = require("../controllers/contactsController");
 const validateBody = require("../helpers/validateBody");
 const {joiSchemas} = require("../models/contact");
 const authenticate = require("../helpers/authenticate");
