@@ -86,7 +86,7 @@ const setAvatar = async (req, res) => {
     const {path: tempUpload, originalname} = req.file;
     const filename = `${id}_${originalname}`;
     const resultUpload = path.join(avatarsDir, filename);
-    (await jimp.read(tempUpload)).resize(360, 360).write(tempUpload);
+    (await jimp.read(tempUpload)).resize(250, 250).write(tempUpload);
     await fs.rename(tempUpload, resultUpload);
 
     const avatarURL = path.join('avatars', filename);
