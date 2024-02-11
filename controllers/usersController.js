@@ -11,10 +11,6 @@ require('dotenv').config();
 
 const {SECRET} = process.env;
 
-const voidFunc = () => {
-    return null;
-}
-
 const avatarsDir = path.join(__dirname, '../', 'public', 'avatars');
 
 const register = async (req, res) => {
@@ -91,7 +87,7 @@ const setAvatar = async (req, res) => {
     const filename = `${id}_${originalname}`;
     const resultUpload = path.join(avatarsDir, filename);
     (await jimp.read(tempUpload)).resize(360, 360).write(tempUpload);
-    await fs.rename(tempUpload, resultUpload, voidFunc);
+    await fs.rename(tempUpload, resultUpload);
 
     const avatarURL = path.join('avatars', filename);
 
