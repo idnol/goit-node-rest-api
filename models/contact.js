@@ -12,7 +12,7 @@ const contactSchema =  new Schema({
     },
     email: {
         type: String,
-        // match: [emailRegex, 'Please fill a valid email address']
+        match: [emailRegex, 'Please fill a valid email address']
     },
     phone: {
         type: String,
