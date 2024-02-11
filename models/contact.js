@@ -6,22 +6,26 @@ const emailRegex = /^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/;
 const phoneRegex = /^380\d{9}$/;
 
 const contactSchema =  new Schema({
-     name: {
+    name: {
         type: String,
         required: [true, 'Set name for contact']
-     },
-     email: {
+    },
+    email: {
         type: String,
-        match: [emailRegex, 'Please fill a valid email address']
-     },
-     phone: {
+        // match: [emailRegex, 'Please fill a valid email address']
+    },
+    phone: {
         type: String,
         match: [phoneRegex, 'Please fill a valid phone number']
-     },
-     favorite: {
+    },
+    favorite: {
          type: Boolean,
          default: false
-     }
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+    },
 }, {versionKey: false, timestamps: true});
 
 const createContactSchema = Joi.object({
@@ -55,4 +59,4 @@ contactSchema.post('save', (error, data, next)  => {
 
  const Contact = model('contact', contactSchema);
 
- module.exports = {Contact, joiSchemas};
+ module.exports = {Contact, joiSchemas, emailRegex};

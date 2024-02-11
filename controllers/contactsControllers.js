@@ -3,7 +3,8 @@ const wrapper = require("../helpers/wrapper");
 const {Contact} = require('../models/contact');
 
 const getAllContacts = async (req, res) => {
-    const result = await Contact.find();
+    const {_id: owner} = req.user;
+    const result = await Contact.find({owner});
     if (!result) {
         throw HttpError(404);
     }
@@ -32,7 +33,8 @@ const deleteContact = async (req, res) => {
 };
 
 const createContact = async (req, res) => {
-    const result = await Contact.create(req.query);
+    const {id: owner} = req.user;
+    const result = await Contact.create({...req.body, owner});
     if (!result) {
         throw HttpError(404);
     }
@@ -42,7 +44,7 @@ const createContact = async (req, res) => {
 const updateContact = async (req, res, next) => {
     const result = await Contact.updateOne(
         {_id: req.params.id},
-        req.query
+        req.body
     )
 
     if (!result) {
@@ -55,7 +57,7 @@ const updateContact = async (req, res, next) => {
 const updateStatusContact = async (req, res) => {
     const result = await Contact.updateOne(
         {_id: req.params.id},
-        req.query
+        req.body
     )
 
     if (!result) {
